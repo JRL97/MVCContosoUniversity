@@ -34,7 +34,11 @@ namespace MVCContosoUniversity.Controllers
             }
 
             var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.ID == id);
+           .Include(s => s.Enrollments)
+               .ThenInclude(e => e.Course)
+           .AsNoTracking()
+           .FirstOrDefaultAsync(m => m.ID == id);
+
             if (student == null)
             {
                 return NotFound();
@@ -125,7 +129,11 @@ namespace MVCContosoUniversity.Controllers
             }
 
             var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.ID == id);
+          .Include(s => s.Enrollments)
+              .ThenInclude(e => e.Course)
+          .AsNoTracking()
+          .FirstOrDefaultAsync(m => m.ID == id);
+
             if (student == null)
             {
                 return NotFound();
